@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="header-bar">
+    <h1>Quora App</h1>
+</div>
+
+<div class="card-body">
+    <form method="POST">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" name="username" required><br>
+        <label for="password">Password:</label>
+        <input type="password" name="password" required><br>
+        <br>
+        <input class="button" type="submit" value="Login">
+        <hr>
+    </form>
+    <p>Don't have an account? <a href="{% url 'user_register' %}">Register</a></p>
+</div>
+{% endblock content %}

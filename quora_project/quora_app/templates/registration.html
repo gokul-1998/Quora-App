@@ -1,0 +1,19 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="header-bar">
+    <h1>Register to Quora App</h1>
+</div>
+
+<div class="card-body">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <br>
+        <input class="button" type="submit" value="Register">
+        <hr>
+    </form>
+    <p>Already have an account? <a href="{% url 'user_login' %}">Login</a></p>
+</div>
+
+{% endblock content %}
