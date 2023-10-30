@@ -32,7 +32,7 @@ This project is a simplified version of Quora, where users can post questions, a
 1. Clone the repository:
 
    ```bash
-   [git clone https://github.com/Pallavi-Pandey/Quora-App](https://github.com/Pallavi-Pandey/Quora-App.git)
+   git clone https://github.com/Pallavi-Pandey/Quora-App.git
    ```
 
 2. Navigate to the project directory:
