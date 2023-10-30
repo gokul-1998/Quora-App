@@ -1,5 +1,3 @@
-Creating a README for your project is essential to provide information to other developers or users about your project. Below is a basic structure for a README for your Quora-inspired project:
-
 # Quora-Inspired Project
 
 This project is a simplified version of Quora, where users can post questions, answer questions, and interact with other users' content.
@@ -34,7 +32,7 @@ This project is a simplified version of Quora, where users can post questions, a
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/Pallavi-Pandey/Quora-App
+   [git clone https://github.com/Pallavi-Pandey/Quora-App](https://github.com/Pallavi-Pandey/Quora-App.git)
    ```
 
 2. Navigate to the project directory:
