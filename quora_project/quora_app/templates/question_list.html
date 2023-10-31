@@ -89,7 +89,7 @@
         <div class="task-title">
             <h3><a class="task-link" href="{% url 'question_detail' question.id %}">{{ question.title }}</a></h3>
         </div>
-        <a class="task-link" href="{% url 'answer_question' question.id %}">Answer this question</a>
+        <!-- <a class="task-link" href="{% url 'answer_question' question.id %}">Answer this question</a> -->
         
 
         {% for answer in question.answers.all %}
