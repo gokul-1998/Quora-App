@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>Questions</title>
-    <link rel="stylesheet" type="text/css" href="your-styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <style>
         body {
@@ -53,6 +52,22 @@
             text-align: center;
             margin: 20px 0;
         }
+
+        .answer-wrapper {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .like-button {
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .like-count {
+            margin-left: 10px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -62,6 +77,7 @@
 <div id="navigation">
     {% if user.is_authenticated %}
         <a href="{% url 'user_logout' %}">Logout</a>
+        
     {% else %}
         <a href="{% url 'user_login' %}">Login</a>
         <a href="{% url 'user_register' %}">Register</a>
@@ -74,6 +90,25 @@
             <h3><a class="task-link" href="{% url 'answer_question' question.id %}">{{ question.title }}</a></h3>
         </div>
         <a class="task-link" href="{% url 'answer_question' question.id %}">Answer this question</a>
+        
+
+        {% for answer in question.answers.all %}
+            <div class="answer-wrapper">
+                <p>{{ answer.content }}</p>
+                <div class="like-button">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'like_answer' answer.id %}">
+                            {% if user in answer.likes.all %}
+                                <i class="fas fa-thumbs-up"></i> Unlike
+                            {% else %}
+                                <i class="far fa-thumbs-up"></i> Like
+                            {% endif %}
+                        </a>
+                    {% endif %}
+                </div>
+                <span class="like-count">{{ answer.likes.count }} likes</span>
+            </div>
+        {% endfor %}
     </div>
 {% endfor %}
 
@@ -83,4 +118,3 @@
 
 </body>
 </html>
-
