@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Question, Answer, Like
+from .models import Question, Answer
 from django.contrib.auth import login, authenticate, logout
 from .forms import QuestionForm, AnswerForm, RegistrationForm
 
@@ -27,6 +27,7 @@ def question_list(request):
     questions = Question.objects.all()     
     return render(request, 'question_list.html', {'questions': questions})
 
+
 def ask_question(request):
     if request.method == 'POST':
         form = QuestionForm(request.POST)
@@ -53,12 +54,19 @@ def answer_question(request, question_id):
         form = AnswerForm()
     return render(request, 'answer_question.html', {'form': form, 'question': question})
 
+
+def question_detail(request, question_id):
+    question = Question.objects.get(pk=question_id)
+    answers = Answer.objects.filter(question=question)
+    return render(request, 'question_detail.html', {'question': question, 'answers': answers})
+
+
 def like_answer(request, answer_id):
     answer = Answer.objects.get(pk=answer_id)
-    like, created = Like.objects.get_or_create(user=request.user, answer=answer)
-    if not created:
-        like.delete()
-    return redirect('answer_question', question_id=answer.question.id)
-
+    if request.user in answer.likes.all():
+        answer.likes.remove(request.user)
+    else:
+        answer.likes.add(request.user)
+    return redirect('question_list')
 
 # Create your views here.

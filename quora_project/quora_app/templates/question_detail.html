@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ question.title }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            text-align: center;
+            background: linear-gradient(90deg, #EEA390 0%, #EB796F 43%, #EB796F 100%);
+            color: #fff;
+            padding: 20px;
+            margin: 0;
+        }
+
+        #navigation {
+            background: linear-gradient(90deg, #EEA390 0%, #EB796F 43%, #EB796F 100%);
+            color: #fff;
+            padding: 10px;
+            text-align: right;
+        }
+
+        #navigation a {
+            text-decoration: none;
+            color: #fff;
+            margin: 10px;
+        }
+
+        .task-wrapper {
+            background-color: #fff;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .task-title {
+            margin-bottom: 10px;
+        }
+
+        .task-link {
+            text-decoration: none;
+            color: #02172b;
+        }
+
+        .ask-button {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .answer-wrapper {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .like-button {
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .like-count {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+
+        .answer-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .answer-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .answer-content {
+            float: left;
+        }
+
+        .answer-info {
+            float: right;
+        }
+
+        /* Clear the float to ensure proper layout for the next item */
+        .answer-item:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Hello {{ request.user|title }}</h1>
+
+<div id="navigation">
+    {% if user.is_authenticated %}
+        <a href="{% url 'user_logout' %}">Logout</a>
+    {% else %}
+        <a href="{% url 'user_login' %}">Login</a>
+        <a href="{% url 'user_register' %}">Register</a>
+    {% endif %}
+</div>
+
+<div class="task-wrapper">
+    <div class="task-title">
+        <h3><a class="task-link" href="{% url 'question_detail' question.id %}">{{ question.title }}</a></h3>
+    </div>
+
+    <h3>Answers:</h3>
+    <ul class="answer-list">
+        {% for answer in answers %}
+            <li class="answer-item">
+                <div class="answer-content">
+                    {{ answer.content }}
+                </div>
+                <div class="answer-info">
+                    <form method="post" action="{% url 'like_answer' answer.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="like-button">
+                            {% if user.is_authenticated %}
+                                {% if user in answer.likes.all %}
+                                    <i class="fas fa-thumbs-up"></i> Unlike
+                                {% else %}
+                                    <i class="far fa-thumbs-up"></i> Like
+                                {% endif %}
+                            {% endif %}
+                        </button>
+                        <span class="like-count">{{ answer.likes.count }} Likes</span>
+                    </form>
+                    <p>Answer by: {{ answer.user.username }}</p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h3>Your Answer:</h3>
+    <form method="post" action="{% url 'answer_question' question.id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Answer</button>
+    </form>
+
+    <a href="{% url 'question_list' %}">Back to Questions</a>
+</div>
+
+</body>
+</html>
