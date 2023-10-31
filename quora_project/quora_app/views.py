@@ -67,6 +67,6 @@ def like_answer(request, answer_id):
         answer.likes.remove(request.user)
     else:
         answer.likes.add(request.user)
-    return redirect('question_list')
+    return redirect('question_detail', question_id=answer.question.id)
 
 # Create your views here.
