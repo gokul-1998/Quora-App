@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-n5)dy_6#6a61z&#q$#81(rs)f$vg)2c_he5kx#-56hgk_tevti
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['quoradora.azurewebsites.net', 'www.yourdomain.com', 'yourdomain.com','127.0.0.1', 'localhost']
 
 LOGIN_URL = 'user_login'
 
